@@ -1,0 +1,3 @@
+ciudad_homepage:
+    path:     /
+    defaults: { _controller: CiudadBundle:Default:index }
