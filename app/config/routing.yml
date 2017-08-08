@@ -1,3 +1,7 @@
+portada:
+    pattern: /
+    defaults: { _controller: OfertaBundle:Default:portada }
+
 pagina_estatica:
     pattern:  /sitio/{pagina}/
     defaults: { _controller: OfertaBundle:Sitio:estatica }
