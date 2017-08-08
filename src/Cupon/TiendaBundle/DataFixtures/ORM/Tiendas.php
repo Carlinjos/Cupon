@@ -37,6 +37,7 @@ class Tiendas extends AbstractFixture implements OrderedFixtureInterface, Contai
                 $tienda->setNombre($this->getNombre());
                 $tienda->setLogin('tienda'.$i);
                 $tienda->setPassword('tienda'.$i);
+                $tienda->setSalt('tienda'.$i);
                 $tienda->setDescripcion($this->getDescripcion());
                 $tienda->setDireccion($this->getDireccion($ciudad));
                 $tienda->setCiudad($ciudad);

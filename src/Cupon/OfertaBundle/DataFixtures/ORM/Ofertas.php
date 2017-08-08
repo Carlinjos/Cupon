@@ -4,7 +4,7 @@ namespace Cupon\OfertaBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Cupon\CiudadBundle\Entity\Oferta;
+use Cupon\OfertaBundle\Entity\Oferta;
 
 class Ofertas extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -31,9 +31,10 @@ class Ofertas extends AbstractFixture implements OrderedFixtureInterface
                 $oferta->setNombre($this->getNombre());
                 $oferta->setDescripcion($this->getDescripcion());
                 $oferta->setCondiciones($this->getCondiciones());
-                $oferta->setRutaFoto('foto'.mt_rand(1, 20).'.jpg');
+                $oferta->setFoto('foto'.mt_rand(1, 20).'.jpg');
                 $oferta->setPrecio(number_format(mt_rand(100, 10000) / 100, 2));
                 $oferta->setDescuento($oferta->getPrecio() * (mt_rand(10, 70) / 100));
+                $oferta->setCompras(mt_rand(0, 50));
 
                 // Una oferta se publica hoy, el resto se reparte entre el pasado y el futuro
                 if (1 === $j) {
