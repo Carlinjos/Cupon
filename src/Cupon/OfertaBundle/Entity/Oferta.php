@@ -9,7 +9,7 @@ use Cupon\OfertaBundle\Util\Util;
  * Oferta
  *
  * @ORM\Table(name="oferta")
- * @ORM\Entity(repositoryClass="Cupon\OfertaBundle\Repository\OfertaRepository")
+ * @ORM\Entity(repositoryClass="Cupon\OfertaBundle\Entity\OfertaRepository")
  */
 class Oferta
 {

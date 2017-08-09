@@ -11,10 +11,7 @@ class DefaultController extends Controller
     public function portadaAction($ciudad)
     {
         $em = $this->getDoctrine()->getManager();
-		$oferta = $em->getRepository('OfertaBundle:Oferta')->findOneBy(array(
-			'ciudad' 			=> $ciudad,
-			//'fechaPublicacion'  => new \DateTime('today')
-		));
+		$oferta = $em->getRepository('OfertaBundle:Oferta')->findOfertaDelDia($ciudad);
 
 		if( !isset($oferta) )
 			throw $this->createNotFoundException('No se ha encontrado la oferta del día en la ciudad seleccionada');
