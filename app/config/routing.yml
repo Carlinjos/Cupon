@@ -33,7 +33,7 @@ tienda_portada:
 
 usuario:
     resource: "@UsuarioBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /usuario
 
 tienda:
     resource: "@TiendaBundle/Resources/config/routing.yml"
