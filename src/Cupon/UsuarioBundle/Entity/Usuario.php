@@ -2,7 +2,11 @@
 
 namespace Cupon\UsuarioBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+use Symfony\Component\Validator\ExecutionContext;
 
 /**
  * Usuario
@@ -10,8 +14,10 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="usuario")
  * @ORM\Entity(repositoryClass="Cupon\UsuarioBundle\Entity\UsuarioRepository")
+ * @DoctrineAssert\UniqueEntity("email")
+ * @Assert\Callback(methods={"esDniValido"})
  */
-class Usuario
+class Usuario implements UserInterface
 {
     /**
      * @var int
@@ -26,6 +32,7 @@ class Usuario
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=100)
+     * @Assert\NotBlank(message = "Por favor, escribe tu nombre")
      */
     private $nombre;
 
@@ -40,6 +47,7 @@ class Usuario
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
+     * @Assert\Email()
      */
     private $email;
 
@@ -54,6 +62,7 @@ class Usuario
      * @var string
      *
      * @ORM\Column(name="salt", type="string", length=255)
+     * @Assert\Length(min = 6)
      */
     private $salt;
 
@@ -61,6 +70,7 @@ class Usuario
      * @var string
      *
      * @ORM\Column(name="direccion", type="text")
+     * @Assert\Length(min = 5, minMessage = "La dirección debería tener {{ limit }} caracteres o más para considerarse válida")
      */
     private $direccion;
 
@@ -361,6 +371,30 @@ class Usuario
         return $this->dni;
     }
 
+    public function esDniValido(ExecutionContext $context)
+    {
+        $dni = $this->getDni();
+        // Comprobar que el formato sea correcto
+        if (0 === preg_match("/\d{1,8}[a-z]/i", $dni)) 
+        {
+            $context->addViolationAtSubPath('dni', 'El DNI introducido no tiene
+            el formato correcto (entre 1 y 8 números seguidos de una letra, sin guiones y
+            sin dejar ningún espacio en blanco)', array(), null);
+            return;
+        }
+        
+        // Comprobar que la letra cumple con el algoritmo
+        $numero = substr($dni, 0, -1);
+        $letra = strtoupper(substr($dni, -1));
+        if ($letra != substr("TRWAGMYFPDXBNJZSQVHLCKE", strtr($numero, "XYZ",
+        "012")%23, 1)) 
+        {
+            $context->addViolationAtSubPath('dni', 'La letra no coincide con el
+            número del DNI. Comprueba que has escrito bien tanto el número como la letra',
+            array(), null);
+        }
+    }
+
     /**
      * Set numeroTarjeta
      *
@@ -413,5 +447,20 @@ class Usuario
     {
        return $this->getNombre().' '.$this->getApellidos();
     }
+
+    function eraseCredentials()
+    {
+    }
+
+    function getRoles()
+    {
+        return array('ROLE_USUARIO');
+    }
+
+    function getUsername()
+    {
+        return $this->getEmail();
+    }
+
 }
 

@@ -41,8 +41,12 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
             $usuario->setNombre($this->getNombre());
             $usuario->setApellidos($this->getApellidos());
             $usuario->setEmail('usuario'.$i.'@localhost');
-            $usuario->setPassword('usuario'.$i);
-            $usuario->setSalt('usuario'.$i);
+            $password = 'usuario'.$i;
+            $salt = md5(time());
+            $encoder = $this->container->get('security.encoder_factory')->getEncoder($usuario);
+            $password = $encoder->encodePassword($password, $salt);
+            $usuario->setPassword($password);
+            $usuario->setSalt($salt);
             $usuario->setDni($this->getDni());
             $usuario->setNumeroTarjeta('1234567890123456');
             $usuario->setFechaAlta(new \DateTime('now - '.mt_rand(1, 150).' days'));

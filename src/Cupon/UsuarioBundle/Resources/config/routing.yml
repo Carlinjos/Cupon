@@ -5,3 +5,17 @@ usuario_homepage:
 usuario_compras:
     path: /compras
     defaults: { _controller: UsuarioBundle:Default:compras }
+
+usuario_login:
+    path: /login
+    defaults: { _controller: UsuarioBundle:Default:login }
+
+usuario_login_check:
+    path: /login_check
+
+usuario_logout:
+    path: /logout
+
+usuario_registro:
+    pattern: /registro
+    defaults: { _controller: UsuarioBundle:Default:registro }

@@ -20,8 +20,8 @@
 
 <section class="estado">
 {% if not expirada %}
-	<div class="tiempo">
-		<strong>Faltan</strong>: {{ oferta.fechaExpiracion | cuenta_atras }}
+	<div id="tiempo">
+		{{ oferta.fechaExpiracion | cuenta_atras }}
 	</div>
 	<div class="compras">
 		<strong>Compras</strong>: {{ oferta.compras }}

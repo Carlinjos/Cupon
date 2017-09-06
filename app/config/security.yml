@@ -2,23 +2,31 @@
 # https://symfony.com/doc/current/security.html
 security:
 
-    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
-    providers:
-        in_memory:
-            memory: ~
-
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        main:
+        frontend:
+            pattern: ^/*
             anonymous: ~
-            # activate different ways to authenticate
+            form_login:
+                login_path: usuario_login
+                check_path: usuario_login_check
+            logout:
+                path: usuario_logout
+                target: /sitio/vuelve-pronto
+            remember_me:
+                key: cupon1234
+                lifetime: 3600
+            switch_user: { role: ROLE_ADMIN }
 
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
+    access_control:
+        - { path: ^/usuario/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/usuario/registro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/usuario/*, roles: ROLE_USUARIO }
 
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
+    providers:
+        usuarios:
+            entity: 
+                class: Cupon\UsuarioBundle\Entity\Usuario
+                property: email
+
+    encoders:
+        Cupon\UsuarioBundle\Entity\Usuario: { algorithm: sha512, iterations: 10 }
