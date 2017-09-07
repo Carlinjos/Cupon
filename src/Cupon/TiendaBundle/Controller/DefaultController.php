@@ -22,7 +22,8 @@ class DefaultController extends Controller
 		$cercanas = $em->getRepository('TiendaBundle:Tienda')
 					   ->findCercanas($tienda->getSlug(), $tienda->getCiudad()->getSlug());
 
-		return $this->render('TiendaBundle:Default:portada.html.twig', 
+		$formato = $this->get('request')->getRequestFormat();
+		return $this->render('TiendaBundle:Default:portada.'.$formato.'.twig', 
 					array('tienda' => $tienda,
 						  'ofertas' => $ofertas,
 						  'cercanas' => $cercanas)

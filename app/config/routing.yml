@@ -24,8 +24,10 @@ oferta:
     defaults: { _controller: OfertaBundle:Default:oferta }
 
 ciudad_recientes:
-    path: /{ciudad}/recientes
-    defaults: { _controller: CiudadBundle:Default:recientes }
+    path: /{ciudad}/recientes.{_format}
+    defaults: { _controller: CiudadBundle:Default:recientes, _format: html }
+    requirements:
+        _format: html|rss
 
 tienda_portada:
     path: /{ciudad}/tiendas/{tienda}

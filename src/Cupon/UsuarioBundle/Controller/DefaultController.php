@@ -100,6 +100,12 @@ class DefaultController extends Controller
 				{
 					$usuario->setPassword($passwordOriginal);
 				}
+				else
+				{
+					$encoder = $this->get('security.encoder_factory')->getEncoder($usuario);
+					$passwordCodificado = $encoder->encodePassword($usuario->getPassword(), $usuario->getSalt());
+					$usuario->setPassword($passwordCodificado);
+				}
 				$em = $this->getDoctrine()->getEntityManager();
 				$em->persist($usuario);
 				$em->flush();
