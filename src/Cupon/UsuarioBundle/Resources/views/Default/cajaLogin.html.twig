@@ -6,7 +6,7 @@
 	{% endfor %}
 
 	<p>Conectado como {{ app.user }}</p>
-	<a href="#">Ver mi perfil</a>
+	<a href="{{ path('usuario_perfil') }}">Ver mi perfil</a>
 	<a href="{{ path('usuario_logout') }}">Cerrar sesión</a>
 {% else %}
 	<a class="boton" href="{{ path('usuario_registro') }}">Regístrate</a>
