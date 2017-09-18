@@ -1,8 +1,9 @@
 portada:
-    path: /{ciudad}
+    path: /{_locale}/{ciudad}
     defaults: 
         _controller: OfertaBundle:Default:portada
         ciudad: '%cupon.ciudad_por_defecto%'
+        _locale: es
 
 _portada:
     path: /
@@ -11,7 +12,7 @@ _portada:
         route: portada
 
 pagina_estatica:
-    path:  /sitio/{pagina}/
+    path:  /{_locale}/sitio/{pagina}/
     defaults: 
         _controller: OfertaBundle:Sitio:estatica
 
@@ -35,16 +36,18 @@ tienda_portada:
 
 usuario:
     resource: "@UsuarioBundle/Resources/config/routing.yml"
-    prefix:   /usuario
+    prefix: /{_locale}/usuario
 
 tienda:
     resource: "@TiendaBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix: /{_locale}
 
 ciudad:
     resource: "@CiudadBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix: /{_locale}
+    requirements:
+        _locale: en|es
 
 oferta:
     resource: "@OfertaBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix: /{_locale}

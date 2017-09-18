@@ -15,9 +15,9 @@
 		<h1><a href="{{ path('portada') }}">CUPON</a></h1>
 		<nav>
 			<ul>
-				<li><a href="{{ path('portada') }}">Oferta del día</a></li>
-				<li><a href="#">Ofertas recientes</a></li>
-				<li><a href="#">Mis ofertas</a></li>
+				<li><a href="{{ path('portada') }}">{% trans %} 'menu.dia' {% endtrans %}</a></li>
+				<li><a href="#">{% trans %} 'menu.recientes' {% endtrans %}</a></li>
+				<li><a href="#">{% trans %} 'menu.mias' {% endtrans %}</a></li>
 				<li>{{ render(controller('CiudadBundle:Default:listaCiudades', { 'ciudad': ciudadSeleccionada })) }}</li>
 			</ul>
 		</nav>

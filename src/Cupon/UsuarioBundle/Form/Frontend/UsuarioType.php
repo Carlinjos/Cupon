@@ -32,6 +32,6 @@ class UsuarioType extends AbstractType
 
 	public function getName()
 	{
-		return 'cupon_usuariobundle_usuariotype';
+		return 'frontend_usuario';
 	}
 }
